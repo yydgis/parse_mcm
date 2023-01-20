@@ -2,9 +2,10 @@
 
 const fs = require('fs');
 
-var logger = fs.createWriteStream('5.txt', {
-  flags: 'w' // 'a' means appending (old data will be preserved)
-});
+var logger0 = fs.createWriteStream('5-0.txt', {  flags: 'w' });
+var logger2 = fs.createWriteStream('5-2.txt', {  flags: 'w' });
+var logger3 = fs.createWriteStream('5-3.txt', {  flags: 'w' });
+
 let rawdata = fs.readFileSync('5.csv');
 let sc = JSON.parse(rawdata);
 console.log(sc);
@@ -71,12 +72,31 @@ for (var i=0;i<n;++i)
           }
         }
         var codeC = code;
-        var is_triple_band = 0;
+        var is_3 = 0;
+        var is_0 = 0;
         if (codeG.length>=3&&codeR.length>=2&&codeE.length>=3&&codeC.length>=2)
-        is_triple_band = 1;
-        console.log(`${scs.no},${scs.mount},${is_triple_band},${scs.lat},${scs.lng},${scs.satInfo.satinfoG.length},${codeG.length},${scs.satInfo.satinfoR.length},${codeR.length},${scs.satInfo.satinfoE.length},${codeE.length},${scs.satInfo.satinfoC.length},${codeC.length}\n`);
-        if (is_triple_band)
-          logger.write(`${scs.no},${scs.mount},${is_triple_band},${scs.lat},${scs.lng},${scs.satInfo.satinfoG.length},${codeG.length},${scs.satInfo.satinfoR.length},${codeR.length},${scs.satInfo.satinfoE.length},${codeE.length},${scs.satInfo.satinfoC.length},${codeC.length}\n`);
+        {
+          is_3 = 1;
+        }
+        if (codeG.length==0||codeR.length==0||codeE.length==0||codeC.length==0)
+        {
+          is_0 = 1;
+        }
+        console.log(`${scs.no},${scs.mount},${is_3},${scs.lat},${scs.lng},${scs.satInfo.satinfoG.length},${codeG.length},${scs.satInfo.satinfoR.length},${codeR.length},${scs.satInfo.satinfoE.length},${codeE.length},${scs.satInfo.satinfoC.length},${codeC.length}\n`);
+        if (is_3)
+        {
+          logger3.write(`${scs.no},${scs.mount},${is_3},${scs.lat},${scs.lng},${scs.satInfo.satinfoG.length},${codeG.length},${scs.satInfo.satinfoR.length},${codeR.length},${scs.satInfo.satinfoE.length},${codeE.length},${scs.satInfo.satinfoC.length},${codeC.length}\n`);
+        }
+        else if (is_0)
+        {
+          logger0.write(`${scs.no},${scs.mount},${is_3},${scs.lat},${scs.lng},${scs.satInfo.satinfoG.length},${codeG.length},${scs.satInfo.satinfoR.length},${codeR.length},${scs.satInfo.satinfoE.length},${codeE.length},${scs.satInfo.satinfoC.length},${codeC.length}\n`);
+        }
+        else
+        {
+          logger2.write(`${scs.no},${scs.mount},${is_3},${scs.lat},${scs.lng},${scs.satInfo.satinfoG.length},${codeG.length},${scs.satInfo.satinfoR.length},${codeR.length},${scs.satInfo.satinfoE.length},${codeE.length},${scs.satInfo.satinfoC.length},${codeC.length}\n`);
+        }
     }
 }
-logger.close();
+logger0.close();
+logger2.close();
+logger3.close();
